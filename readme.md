@@ -14,13 +14,13 @@ The returned data is a packed Buffer with the public key, nonce, tag, and encryp
 ### Methods
 
 * [JWKtoBuffer](#jwktobuffer)
-* [createKeyPair](_ecies_.ecies.md#createkeypair)
-* [decryptChaCha20](_ecies_.ecies.md#decryptchacha20)
-* [encryptChaCha20](_ecies_.ecies.md#encryptchacha20)
-* [getPublicKey](_ecies_.ecies.md#getpublickey)
-* [getSecret](_ecies_.ecies.md#getsecret)
-* [privateJWK](_ecies_.ecies.md#privatejwk)
-* [publicJWK](_ecies_.ecies.md#publicjwk)
+* [createKeyPair](#createkeypair)
+* [decryptChaCha20](#decryptchacha20)
+* [encryptChaCha20](#encryptchacha20)
+* [getPublicKey](#getpublickey)
+* [getSecret](#getsecret)
+* [privateJWK](#privatejwk)
+* [publicJWK](#publicjwk)
 
 ## Methods
 
