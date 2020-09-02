@@ -1,6 +1,13 @@
 
 [![Build Status](https://travis-ci.com/aellison5505/Hybrid-ECIES.svg?branch=master)](https://travis-ci.com/aellison5505/Hybrid-ECIES)
 
+## Usage
+```typescript
+    import { ECIES } from './ecies';
+    let ecies = new ECIES();
+    // use ecies to call methods
+
+```
 # Class: ECIES
 
 Hybred EC encrytion scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data.
@@ -27,7 +34,7 @@ The returned data is a packed Buffer with the public key, nonce, tag, and encryp
  
 ###  JWKtoBuffer
 
-▸ **JWKtoBuffer**(`jwk`: [JWK](../interfaces/_ecies_.jwk.md)): *Buffer*
+▸ **JWKtoBuffer**(`jwk`: [JWK](#JWK)): *Buffer*
 
 Defined in ecies.ts:128
 
@@ -37,7 +44,7 @@ Return a Buffer from either a public or private JWK.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`jwk` | [JWK](../interfaces/_ecies_.jwk.md) | public or private JSON Web Key |
+`jwk` | [JWK](#JWK) | public or private JSON Web Key |
 
 **Returns:** *Buffer*
 
@@ -146,7 +153,7 @@ ___
 
 ###  privateJWK
 
-▸ **privateJWK**(`privateKey`: Buffer): *[JWK](../interfaces/_ecies_.jwk.md)*
+▸ **privateJWK**(`privateKey`: Buffer): *[JWK](#JWK)*
 
 Defined in ecies.ts:66
 
@@ -158,7 +165,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `privateKey` | Buffer | EC private key |
 
-**Returns:** *[JWK](../interfaces/_ecies_.jwk.md)*
+**Returns:** *[JWK](#JWK)*
 
 Json Web Token
 
@@ -166,7 +173,7 @@ ___
 
 ###  publicJWK
 
-▸ **publicJWK**(`publicKey`: Buffer): *[JWK](../interfaces/_ecies_.jwk.md)*
+▸ **publicJWK**(`publicKey`: Buffer): *[JWK](#JWK)*
 
 Defined in ecies.ts:80
 
@@ -178,6 +185,78 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `publicKey` | Buffer | EC Public Key |
 
-**Returns:** *[JWK](../interfaces/_ecies_.jwk.md)*
+**Returns:** *[JWK](#JWK)*
 
 Json Web Token
+
+___
+
+### JWK
+
+### Interface: JWK
+
+JSON Wek Token
+
+## Hierarchy
+
+* **JWK**
+
+## Index
+
+### Properties
+
+* [crv](#crv)
+* [d](#optional-d)
+* [kid](#kid)
+* [kty](#kty)
+* [x](#x)
+* [y](#optional-y)
+
+## Properties
+
+###  crv
+
+• **crv**: *string*
+
+Defined in ecies.ts:9
+
+___
+
+### `Optional` d
+
+• **d**? : *undefined | string*
+
+Defined in ecies.ts:8
+
+___
+
+###  kid
+
+• **kid**: *string*
+
+Defined in ecies.ts:10
+
+___
+
+###  kty
+
+• **kty**: *string*
+
+Defined in ecies.ts:7
+
+___
+
+###  x
+
+• **x**: *string*
+
+Defined in ecies.ts:11
+
+___
+
+### `Optional` y
+
+• **y**? : *undefined | string*
+
+Defined in ecies.ts:12
+
