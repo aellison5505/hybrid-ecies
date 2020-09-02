@@ -1,6 +1,6 @@
 {
   "name": "hybrid-ecies",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data. The returned data is a packed Buffer with the public key, nonce, tag, and encrypted data.",
   "main": "lib/ecies.js",
   "scripts": {
