@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.com/aellison5505/Hybrid-ECIES.svg?branch=master)](https://travis-ci.com/aellison5505/Hybrid-ECIES)
+
 # Class: ECIES
 
 Hybred EC encrytion scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data.
