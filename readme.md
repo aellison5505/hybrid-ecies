@@ -3,7 +3,7 @@
 
 ## Usage
 ```typescript
-    import {ECIES, JWK } from 'ec_hydrid_ecies';
+    import { ECIES, JWK } from 'ec_hydrid_ecies';
     let ecies = new ECIES();
     // use ecies to call methods
 

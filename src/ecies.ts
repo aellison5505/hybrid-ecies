@@ -55,8 +55,6 @@ export class ECIES {
         return (compress === true ?  Buffer.from(ec.getPublicKey('hex','compressed'), 'hex') : ec.getPublicKey());
     }
 
-
-
     /**
      * This takes an EC private key and returns the JWK.
      * 

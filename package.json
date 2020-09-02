@@ -1,6 +1,6 @@
 {
   "name": "ec_hydrid_ecies",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Hybred EC encrytion scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data. The returned data is a packed Buffer with the public key, nonce, tag, and encrypted data.",
   "main": "lib/ecies.js",
   "scripts": {
@@ -21,6 +21,7 @@
     "Hybrid ECIES"
   ],
   "license": "MIT",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "repository": {
     "type": "git",
     "url": "https://github.com/aellison5505/Hybrid-ECIES.git"
