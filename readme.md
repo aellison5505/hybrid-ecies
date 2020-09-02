@@ -1,16 +1,24 @@
 
 [![Build Status](https://travis-ci.com/aellison5505/Hybrid-ECIES.svg?branch=master)](https://travis-ci.com/aellison5505/Hybrid-ECIES)
 
+## Install
+```
+    npm i hybrid-ecies
+
+    npm test
+
+```
+
 ## Usage
 ```typescript
-    import { ECIES, JWK } from 'ec_hydrid_ecies';
+    import { ECIES, JWK } from 'hybrid-ecies';
     let ecies = new ECIES();
     // use ecies to call methods
 
 ```
 # Class: ECIES
 
-Hybred EC encrytion scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data.
+Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data.
 The returned data is a packed Buffer with the public key, nonce, tag, and encrypted data.
 
 ## Hierarchy
