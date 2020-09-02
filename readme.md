@@ -24,7 +24,7 @@ The returned data is a packed Buffer with the public key, nonce, tag, and encryp
 * [publicJWK](#publicjwk)
 
 ## Methods
-
+ 
 ###  JWKtoBuffer
 
 ▸ **JWKtoBuffer**(`jwk`: [JWK](../interfaces/_ecies_.jwk.md)): *Buffer*
