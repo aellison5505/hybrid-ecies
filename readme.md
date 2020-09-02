@@ -13,7 +13,7 @@ The returned data is a packed Buffer with the public key, nonce, tag, and encryp
 
 ### Methods
 
-* [JWKtoBuffer](_ecies_.ecies.md#jwktobuffer)
+* [JWKtoBuffer](#jwktobuffer)
 * [createKeyPair](_ecies_.ecies.md#createkeypair)
 * [decryptChaCha20](_ecies_.ecies.md#decryptchacha20)
 * [encryptChaCha20](_ecies_.ecies.md#encryptchacha20)
