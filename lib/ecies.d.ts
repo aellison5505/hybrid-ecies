@@ -11,8 +11,8 @@ export interface JWK {
     "y"?: string;
 }
 /**
- * Hybred EC encrytion scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data.
- * The returned data is a packed Buffer with the public key, nonce, tag, and encrypted data.
+ * Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 or aes-256-gcm to encrypt data.
+ * The returned data is a packed Buffer with the public key, nonce/iv, tag, and encrypted data.
  */
 export declare class ECIES {
     /**
@@ -57,6 +57,22 @@ export declare class ECIES {
      * @returns Buffer of either public or private key
      */
     JWKtoBuffer(jwk: JWK): Buffer;
+    /**
+      * This takes an EC public key as input, creates an EC pair to encrypt the data.
+      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
+      * @param publicKey EC Public Key
+      * @param data Data to encrypt
+      * @returns Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+      */
+    encryptAES256(publicKey: Buffer, data: Buffer): Buffer;
+    /**
+    * Takes private EC key of the public key used to encrypt the data and decrypts it.
+    *
+    * @param privateKey EC Key used to encrypt the data.
+    * @param encodedData Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+    * @returns Buffer of decrypted data.
+    */
+    decryptAES256(privateKey: Buffer, encodedData: Buffer): Buffer;
     /**
      * This takes an EC public key as input, creates an EC pair to encrypt the data.
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.

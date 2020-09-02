@@ -13,8 +13,8 @@ export interface JWK {
 }
 
 /**
- * Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 to encrypt data.
- * The returned data is a packed Buffer with the public key, nonce, tag, and encrypted data.
+ * Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 or aes-256-gcm to encrypt data.
+ * The returned data is a packed Buffer with the public key, nonce/iv, tag, and encrypted data.
  */
 export class ECIES {
     /**
@@ -133,6 +133,55 @@ export class ECIES {
             return Buffer.from(jwk.x,'base64');
         }
     }
+   /**
+     * This takes an EC public key as input, creates an EC pair to encrypt the data.
+     * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data. 
+     * @param publicKey EC Public Key
+     * @param data Data to encrypt
+     * @returns Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+     */
+    encryptAES256(publicKey: Buffer, data: Buffer): Buffer {
+        let iv = Buffer.alloc(16);
+        randomFillSync(iv);
+        // console.log('nonce', nonce.toString('hex'));
+        let tempKey = this.createKeyPair();
+        let key = this.getSecret(tempKey,publicKey);
+        // console.log('key', key.toString('hex'));
+        let aes = createCipheriv('aes-256-gcm',key,iv);
+        let encData = aes.update(data);
+        aes.final();
+        let tag = aes.getAuthTag();
+        let pack = Buffer.concat([this.getPublicKey(tempKey,true),iv,tag,encData]);
+        return pack;
+    }
+
+     /**
+     * Takes private EC key of the public key used to encrypt the data and decrypts it.
+     * 
+     * @param privateKey EC Key used to encrypt the data.
+     * @param encodedData Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+     * @returns Buffer of decrypted data. 
+     */
+    decryptAES256(privateKey: Buffer, encodedData: Buffer): Buffer {
+        let pubKey = Buffer.alloc(33);
+        encodedData.copy(pubKey,0,0,33);
+        let iv = Buffer.alloc(16);
+        encodedData.copy(iv,0,33,(33+16));
+        let tag = Buffer.alloc(16);
+        encodedData.copy(tag,0,(33+16),(33+16+16));
+        let encData = Buffer.alloc(encodedData.length-(33+16+16));
+        encodedData.copy(encData,0,(33+16+16));
+        let key = this.getSecret(privateKey,pubKey);
+        
+        // console.log('key', key.toString('hex'));
+        let aes = createDecipheriv('aes-256-gcm',key,iv);
+        aes.setAuthTag(tag);
+        let data = aes.update(encData);
+        aes.final();
+
+        return data;
+    }
+
 
     /**
      * This takes an EC public key as input, creates an EC pair to encrypt the data.
