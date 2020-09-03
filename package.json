@@ -8,7 +8,7 @@
     "build-watch": "tsc -w",
     "build": "tsc",
     "test": "mocha",
-    "publish": "npm publish hybrid-ecies --access public"
+    "publish": "npm publish"
   },
   "author": "Anthony Ellison <anthonyellison5505@comcast.net>",
   "keywords": [
