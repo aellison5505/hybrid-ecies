@@ -162,7 +162,7 @@ export class ECIES {
         } else {
             PEM = `-----BEGIN PUBLIC KEY-----\n${pemForm}-----END PUBLIC KEY-----`
         }
-        console.log(PEM);
+        // console.log(PEM);
         return PEM;
     }
 
