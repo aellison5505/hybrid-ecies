@@ -34,6 +34,7 @@ describe('ECIES', () => {
   let sec1 = ec.getSecret(secKey, ec.getPublicKey(tempKeys));
   let sec2 = ec.getSecret(tempKeys, ec.getPublicKey(secKey));
 
+
   describe('#getSecret()', () => {
     it('should be a buffer', () => {
       assert.ok(Buffer,isBuffer(sec1));
@@ -43,6 +44,47 @@ describe('ECIES', () => {
     });
     it('should be equal with keys interchanged', () => {
       assert.equal(sec1.toString('hex'),sec2.toString('hex'));
+    });
+  });
+
+  let der = ec.getDER(secKey, 'Private');
+  let derPub = ec.getDER(ec.getPublicKey(secKey),'Public');
+  let derPubComp = ec.getDER(ec.getPublicKey(secKey, true),'Public');
+
+  describe('#publicJWK()', () => {
+    
+    it('should be a buffer', () => {
+      assert.ok(isBuffer(der));
+    })
+
+    it('should equal 118 bytes', () => {
+      assert.ok(der.length, 118);
+    })
+
+    it('should equal 88 bytes', () => {
+      assert.equal(derPub.length, 88);
+    })
+
+    it('should equal 56 bytes', () => {
+      assert.equal(derPubComp.length, 56);
+    })
+
+  });
+
+  let pem = ec.getPEM(secKey,'RAW','Private');
+  let pemPub = ec.getPEM(ec.getPublicKey(secKey),'RAW', 'Public');
+  let pemPubComp = ec.getPEM(ec.getPublicKey(secKey, true),'RAW','Public');
+
+  describe('#getPEM()', () => {
+    
+    it('should be a string', () => {
+      assert.equal(typeof(pem), 'string');
+    });
+    it('should be a string', () => {
+      assert.equal(typeof(pemPub), 'string');
+    });
+    it('should be a string', () => {
+      assert.equal(typeof(pemPubComp), 'string');
     });
   });
 

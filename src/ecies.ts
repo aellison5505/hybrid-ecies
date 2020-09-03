@@ -1,4 +1,6 @@
 import { createECDH, ECDH, createCipheriv, createDecipheriv, randomFillSync, createHash } from 'crypto';
+import { strict } from 'assert';
+import { stringify } from 'querystring';
 
 /**
  * JSON Wek Token
@@ -133,6 +135,56 @@ export class ECIES {
             return Buffer.from(jwk.x,'base64');
         }
     }
+
+    getPEM(ecKey: Buffer, encoding: 'RAW' | 'DER' ,type: 'Private' | 'Public'): string {
+        let PEM: string = '';
+        let pemStr = '';
+
+        (encoding === 'RAW' ? pemStr = this.getDER(ecKey,type).toString('base64') : pemStr = ecKey.toString('base64'));
+
+       // console.log(pemStr);
+        let pemForm:string = '';
+        let i = 0;
+        let c = 64;
+        do {
+            var j = i + 64;
+            (j >= pemStr.length ? c = pemStr.length - i : c = 64);
+            pemForm = `${pemForm}${pemStr.substr(i,c)}\n`;
+            i = j;
+        //    console.log(i);
+        } while (i < pemStr.length);
+
+    
+
+        if(type === "Private") {
+           
+            PEM = `-----BEGIN EC PRIVATE KEY-----\n${pemForm}----END EC PRIVATE KEY-----`
+        } else {
+            PEM = `-----BEGIN PUBLIC KEY-----\n${pemForm}-----END PUBLIC KEY-----`
+        }
+        console.log(PEM);
+        return PEM;
+    }
+
+    getDER(ecKey: Buffer, type: 'Private' | 'Public'): Buffer {
+        let packDER: Buffer;
+        if(type === 'Private') {
+            packDER = Buffer.concat([Buffer.from('30740201010420','hex'),ecKey,Buffer.from('a00706052b8104000aa144034200','hex'),this.getPublicKey(ecKey)]);
+         
+        } else {
+            let pre: string;
+            
+            (ecKey.length === 33 ? (pre = '3036301006072a8648ce3d020106052b8104000a032200') : (pre = '3056301006072a8648ce3d020106052b8104000a034200'));
+
+            if(ecKey.length > 65)
+                throw new Error('Invalid key');    
+            packDER = Buffer.concat([Buffer.from(pre,'hex'),ecKey]);
+        }
+       
+        return packDER;
+    }
+
+
    /**
      * This takes an EC public key as input, creates an EC pair to encrypt the data.
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data. 

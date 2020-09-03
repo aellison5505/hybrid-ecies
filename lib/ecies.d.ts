@@ -57,6 +57,8 @@ export declare class ECIES {
      * @returns Buffer of either public or private key
      */
     JWKtoBuffer(jwk: JWK): Buffer;
+    getPEM(ecKey: Buffer, encoding: 'RAW' | 'DER', type: 'Private' | 'Public'): string;
+    getDER(ecKey: Buffer, type: 'Private' | 'Public'): Buffer;
     /**
       * This takes an EC public key as input, creates an EC pair to encrypt the data.
       * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
