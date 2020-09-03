@@ -100,7 +100,7 @@ Takes private EC key of the public key used to encrypt the data and decrypts it.
 Name | Type | Description |
 ------ | ------ | ------ |
 `privateKey` | Buffer | EC Key used to encrypt the data. |
-`encodedData` | Buffer | Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable) |
+`encodedData` | Buffer | Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable) |
 
 **Returns:** *Buffer*
 
@@ -121,7 +121,7 @@ Takes private EC key of the public key used to encrypt the data and decrypts it.
 Name | Type | Description |
 ------ | ------ | ------ |
 `privateKey` | Buffer | EC Key used to encrypt the data. |
-`encodedData` | Buffer | Buffer(Bytes) - ECPubKey(32) nonce(12) tag(16) encData(variable) |
+`encodedData` | Buffer | Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable) |
 
 **Returns:** *Buffer*
 
@@ -147,7 +147,7 @@ Name | Type | Description |
 
 **Returns:** *Buffer*
 
-Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable)
 
 ___
 
@@ -169,7 +169,7 @@ Name | Type | Description |
 
 **Returns:** *Buffer*
 
-Buffer(Bytes) - ECPubKey(32) nonce(12) tag(16) encData(variable)
+Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
 
 ___
 

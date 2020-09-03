@@ -138,10 +138,10 @@ export class ECIES {
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data. 
      * @param publicKey EC Public Key
      * @param data Data to encrypt
-     * @returns Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+     * @returns Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable)
      */
     encryptAES256(publicKey: Buffer, data: Buffer): Buffer {
-        let iv = Buffer.alloc(16);
+        let iv = Buffer.alloc(12);
         randomFillSync(iv);
         // console.log('nonce', nonce.toString('hex'));
         let tempKey = this.createKeyPair();
@@ -159,18 +159,18 @@ export class ECIES {
      * Takes private EC key of the public key used to encrypt the data and decrypts it.
      * 
      * @param privateKey EC Key used to encrypt the data.
-     * @param encodedData Buffer(Bytes) - ECPubKey(32) iv(16) tag(16) encData(variable)
+     * @param encodedData Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable)
      * @returns Buffer of decrypted data. 
      */
     decryptAES256(privateKey: Buffer, encodedData: Buffer): Buffer {
         let pubKey = Buffer.alloc(33);
         encodedData.copy(pubKey,0,0,33);
-        let iv = Buffer.alloc(16);
-        encodedData.copy(iv,0,33,(33+16));
+        let iv = Buffer.alloc(12);
+        encodedData.copy(iv,0,33,(33+12));
         let tag = Buffer.alloc(16);
-        encodedData.copy(tag,0,(33+16),(33+16+16));
-        let encData = Buffer.alloc(encodedData.length-(33+16+16));
-        encodedData.copy(encData,0,(33+16+16));
+        encodedData.copy(tag,0,(33+12),(33+12+16));
+        let encData = Buffer.alloc(encodedData.length-(33+12+16));
+        encodedData.copy(encData,0,(33+12+16));
         let key = this.getSecret(privateKey,pubKey);
         
         // console.log('key', key.toString('hex'));
@@ -188,7 +188,7 @@ export class ECIES {
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data. 
      * @param publicKey EC Public Key
      * @param data Data to encrypt
-     * @returns Buffer(Bytes) - ECPubKey(32) nonce(12) tag(16) encData(variable)
+     * @returns Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
      */
     encryptChaCha20(publicKey: Buffer, data: Buffer): Buffer {
 
@@ -215,7 +215,7 @@ export class ECIES {
      * Takes private EC key of the public key used to encrypt the data and decrypts it.
      * 
      * @param privateKey EC Key used to encrypt the data.
-     * @param encodedData Buffer(Bytes) - ECPubKey(32) nonce(12) tag(16) encData(variable)
+     * @param encodedData Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
      * @returns Buffer of decrypted data. 
      */
     decryptChaCha20(privateKey: Buffer, encodedData: Buffer): Buffer {
