@@ -78,14 +78,14 @@ export declare class ECIES {
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
      * @param publicKey EC Public Key
      * @param data Data to encrypt
-     * @returns Buffer(Bytes) - ECPubKey(32) nonce(12) tag(16) encData(variable)
+     * @returns Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
      */
     encryptChaCha20(publicKey: Buffer, data: Buffer): Buffer;
     /**
      * Takes private EC key of the public key used to encrypt the data and decrypts it.
      *
      * @param privateKey EC Key used to encrypt the data.
-     * @param encodedData Buffer(Bytes) - ECPubKey(32) nonce(12) tag(16) encData(variable)
+     * @param encodedData Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
      * @returns Buffer of decrypted data.
      */
     decryptChaCha20(privateKey: Buffer, encodedData: Buffer): Buffer;
