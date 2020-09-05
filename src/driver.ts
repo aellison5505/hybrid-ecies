@@ -35,6 +35,7 @@ let maintest = async () => {
 let main = async () => {
     let ec = new ECIES();
     let privateKey = ec.createKeyPair();
+    console.log(privateKey.toString('hex'))
     let pubJWK = ec.publicJWK(ec.getPublicKey(privateKey));
     console.log(pubJWK);
     let pubKey = ec.JWKtoBuffer(pubJWK);

@@ -1,4 +1,10 @@
 
+<a name="readmemd"></a>
+
+[hybrid-ecies](#readmemd) › [Globals](#globalsmd)
+
+# hybrid-ecies
+
 [![Build Status](https://travis-ci.com/aellison5505/Hybrid-ECIES.svg?branch=master)](https://travis-ci.com/aellison5505/Hybrid-ECIES)
 
 ## Install
@@ -27,6 +33,11 @@
     // use ecies to call methods
 ```
 
+
+<a name="classes_ecies_eciesmd"></a>
+
+[hybrid-ecies](#readmemd) › [Globals](#globalsmd) › ["ecies"](#modules_ecies_md) › [ECIES](#classes_ecies_eciesmd)
+
 # Class: ECIES
 
 Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 or aes-256-gcm to encrypt data.
@@ -46,6 +57,8 @@ The returned data is a packed Buffer with the public key, nonce/iv, tag, and enc
 * [decryptChaCha20](#decryptchacha20)
 * [encryptAES256](#encryptaes256)
 * [encryptChaCha20](#encryptchacha20)
+* [getDER](#getder)
+* [getPEM](#getpem)
 * [getPublicKey](#getpublickey)
 * [getSecret](#getsecret)
 * [privateJWK](#privatejwk)
@@ -55,9 +68,7 @@ The returned data is a packed Buffer with the public key, nonce/iv, tag, and enc
 
 ###  JWKtoBuffer
 
-▸ **JWKtoBuffer**(`jwk`: [JWK](#JWK)): *Buffer*
-
-Defined in ecies.ts:126
+▸ **JWKtoBuffer**(`jwk`: [JWK](#Interface:-JWK)): *Buffer*
 
 Return a Buffer from either a public or private JWK.
 
@@ -65,7 +76,7 @@ Return a Buffer from either a public or private JWK.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`jwk` | [JWK](#JWK) | public or private JSON Web Key |
+`jwk` | [JWK](#interfaces_ecies_jwkmd) | public or private JSON Web Key |
 
 **Returns:** *Buffer*
 
@@ -76,8 +87,6 @@ ___
 ###  createKeyPair
 
 ▸ **createKeyPair**(): *Buffer*
-
-Defined in ecies.ts:24
 
 This creates a EC secp256k1 key pair and returns the private key as a buffer.
 
@@ -90,8 +99,6 @@ ___
 ###  decryptAES256
 
 ▸ **decryptAES256**(`privateKey`: Buffer, `encodedData`: Buffer): *Buffer*
-
-Defined in ecies.ts:165
 
 Takes private EC key of the public key used to encrypt the data and decrypts it.
 
@@ -112,8 +119,6 @@ ___
 
 ▸ **decryptChaCha20**(`privateKey`: Buffer, `encodedData`: Buffer): *Buffer*
 
-Defined in ecies.ts:221
-
 Takes private EC key of the public key used to encrypt the data and decrypts it.
 
 **Parameters:**
@@ -132,8 +137,6 @@ ___
 ###  encryptAES256
 
 ▸ **encryptAES256**(`publicKey`: Buffer, `data`: Buffer): *Buffer*
-
-Defined in ecies.ts:143
 
 This takes an EC public key as input, creates an EC pair to encrypt the data.
 Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
@@ -155,8 +158,6 @@ ___
 
 ▸ **encryptChaCha20**(`publicKey`: Buffer, `data`: Buffer): *Buffer*
 
-Defined in ecies.ts:193
-
 This takes an EC public key as input, creates an EC pair to encrypt the data.
 Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
 
@@ -173,11 +174,40 @@ Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
 
 ___
 
+###  getDER
+
+▸ **getDER**(`ecKey`: Buffer, `type`: "Private" | "Public"): *Buffer*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ecKey` | Buffer |
+`type` | "Private" &#124; "Public" |
+
+**Returns:** *Buffer*
+
+___
+
+###  getPEM
+
+▸ **getPEM**(`ecKey`: Buffer, `encoding`: "RAW" | "DER", `type`: "Private" | "Public"): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ecKey` | Buffer |
+`encoding` | "RAW" &#124; "DER" |
+`type` | "Private" &#124; "Public" |
+
+**Returns:** *string*
+
+___
+
 ###  getPublicKey
 
 ▸ **getPublicKey**(`privateKey`: Buffer, `compress?`: Boolean): *Buffer*
-
-Defined in ecies.ts:50
 
 Takes EC private key and returns the public key.
 
@@ -198,8 +228,6 @@ ___
 
 ▸ **getSecret**(`privateKey`: Buffer, `publicKey`: Buffer): *Buffer*
 
-Defined in ecies.ts:37
-
 This returns the calculated secret from a private and public key.
 
 **Parameters:**
@@ -217,9 +245,7 @@ ___
 
 ###  privateJWK
 
-▸ **privateJWK**(`privateKey`: Buffer): *[JWK](#JWK)*
-
-Defined in ecies.ts:64
+▸ **privateJWK**(`privateKey`: Buffer): *[JWK](#interfaces_ecies_jwkmd)*
 
 This takes an EC private key and returns the JWK.
 
@@ -229,7 +255,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `privateKey` | Buffer | EC private key |
 
-**Returns:** *[JWK](#JWK)*
+**Returns:** *[JWK](#interfaces_ecies_jwkmd)*
 
 Json Web Token
 
@@ -237,9 +263,7 @@ ___
 
 ###  publicJWK
 
-▸ **publicJWK**(`publicKey`: Buffer): *[JWK](#JWK)*
-
-Defined in ecies.ts:78
+▸ **publicJWK**(`publicKey`: Buffer): *[JWK](#interfaces_ecies_jwkmd)*
 
 This takes an EC public key and returns the JWK.
 
@@ -249,16 +273,29 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `publicKey` | Buffer | EC Public Key |
 
-**Returns:** *[JWK](#JWK)*
+**Returns:** *[JWK](#interfaces_ecies_jwkmd)*
 
 Json Web Token
 
-___
+
+<a name="globalsmd"></a>
+
+[hybrid-ecies](#readmemd) › [Globals](#globalsmd)
+
+# hybrid-ecies
+
+## Index
+
+### Modules
+
+* ["ecies"](#modules_ecies_md)
 
 
-### JWK
+<a name="interfaces_ecies_jwkmd"></a>
 
-### Interface: JWK
+[hybrid-ecies](#readmemd) › [Globals](#globalsmd) › ["ecies"](#modules_ecies_md) › [JWK](#interfaces_ecies_jwkmd)
+
+# Interface: JWK
 
 JSON Wek Token
 
@@ -283,15 +320,11 @@ JSON Wek Token
 
 • **crv**: *string*
 
-Defined in ecies.ts:9
-
 ___
 
 ### `Optional` d
 
 • **d**? : *undefined | string*
-
-Defined in ecies.ts:8
 
 ___
 
@@ -299,15 +332,11 @@ ___
 
 • **kid**: *string*
 
-Defined in ecies.ts:10
-
 ___
 
 ###  kty
 
 • **kty**: *string*
-
-Defined in ecies.ts:7
 
 ___
 
@@ -315,13 +344,25 @@ ___
 
 • **x**: *string*
 
-Defined in ecies.ts:11
-
 ___
 
 ### `Optional` y
 
 • **y**? : *undefined | string*
 
-Defined in ecies.ts:12
 
+<a name="modules_ecies_md"></a>
+
+[hybrid-ecies](#readmemd) › [Globals](#globalsmd) › ["ecies"](#modules_ecies_md)
+
+# Module: "ecies"
+
+## Index
+
+### Classes
+
+* [ECIES](#classes_ecies_eciesmd)
+
+### Interfaces
+
+* [JWK](#interfaces_ecies_jwkmd)
