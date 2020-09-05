@@ -10,7 +10,7 @@
     "build-docs": "touch ./README.md && rm ./README.md && npx typedoc --exclude /mnt/d/dev/hybrid-ecies/src/driver.ts --hideSources --readme /mnt/d/dev/hybrid-ecies/readmeHeader/readme.md --theme markdown --out /mnt/d/dev/hybrid-ecies/docs /mnt/d/dev/hybrid-ecies/src && npx concat-md --decrease-title-levels ./docs > README.md",
     "test": "mocha"
   },
-  "author": "Anthony Ellison <anthonyellison5505@comcast.net>",
+  "author": "Anthony Ellison",
   "keywords": [
     "EC",
     "ECIES",
