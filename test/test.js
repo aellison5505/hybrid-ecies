@@ -2,6 +2,7 @@ var assert = require('assert');
 const {ECIES} = require('../lib/ecies');
 const { isBuffer } = require('util');
 let ec = new ECIES();
+
 describe('ECIES', () => {
   
   let secKey = ec.createKeyPair();
@@ -130,7 +131,7 @@ describe('ECIES', () => {
 
   });
 
-  let encPack = ec.encryptChaCha20(pubKey,'Pass the test!');
+  let encPack = ec.encryptChaCha20(pubKey, 'Pass the test!');
 
   describe('#encryptChaCha20()', () => {
     

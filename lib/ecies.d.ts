@@ -60,13 +60,16 @@ export declare class ECIES {
     getPEM(ecKey: Buffer, encoding: 'RAW' | 'DER', type: 'Private' | 'Public'): string;
     getDER(ecKey: Buffer, type: 'Private' | 'Public'): Buffer;
     /**
-      * This takes an EC public key as input, creates an EC pair to encrypt the data.
+      * This takes an EC public key as input, creates an unique EC pair to encrypt the data.
       * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
+      * Optional to supply Private Key
       * @param publicKey EC Public Key
+      * @param privateKey Optional
       * @param data Data to encrypt
       * @returns Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable)
       */
     encryptAES256(publicKey: Buffer, data: Buffer): Buffer;
+    encryptAES256(publicKey: Buffer, privateKey: Buffer, data: Buffer): Buffer;
     /**
     * Takes private EC key of the public key used to encrypt the data and decrypts it.
     *
@@ -78,11 +81,14 @@ export declare class ECIES {
     /**
      * This takes an EC public key as input, creates an EC pair to encrypt the data.
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
+     * Optional to supply Private Key
      * @param publicKey EC Public Key
+     * @param privateKey Optional
      * @param data Data to encrypt
      * @returns Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
      */
-    encryptChaCha20(publicKey: Buffer, data: Buffer): Buffer;
+    encryptChaCha20(publicKey: Buffer, data: any): Buffer;
+    encryptChaCha20(publicKey: Buffer, privateKey: Buffer, data: any): Buffer;
     /**
      * Takes private EC key of the public key used to encrypt the data and decrypts it.
      *

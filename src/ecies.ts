@@ -186,24 +186,40 @@ export class ECIES {
 
 
    /**
-     * This takes an EC public key as input, creates an EC pair to encrypt the data.
-     * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data. 
+     * This takes an EC public key as input, creates an unique EC pair to encrypt the data.
+     * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
+     * Optional to supply Private Key 
      * @param publicKey EC Public Key
+     * @param privateKey Optional
      * @param data Data to encrypt
      * @returns Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable)
      */
-    encryptAES256(publicKey: Buffer, data: Buffer): Buffer {
+    encryptAES256(publicKey: Buffer, data: Buffer): Buffer
+    encryptAES256(publicKey: Buffer, privateKey: Buffer, data: Buffer): Buffer
+    encryptAES256(publicKey: Buffer, arg2: Buffer, arg3?: Buffer): Buffer {
+
+        let privateKey: Buffer;
+        let data: Buffer;
+
+        if(arg2 && arg3) {
+            privateKey = arg2;
+            data = arg3;
+        } else {
+            privateKey = this.createKeyPair();
+            data = arg2;
+        }
+
         let iv = Buffer.alloc(12);
         randomFillSync(iv);
         // console.log('nonce', nonce.toString('hex'));
-        let tempKey = this.createKeyPair();
-        let key = this.getSecret(tempKey,publicKey);
+        
+        let key = this.getSecret(privateKey,publicKey);
         // console.log('key', key.toString('hex'));
         let aes = createCipheriv('aes-256-gcm',key,iv);
         let encData = aes.update(data);
         aes.final();
         let tag = aes.getAuthTag();
-        let pack = Buffer.concat([this.getPublicKey(tempKey,true),iv,tag,encData]);
+        let pack = Buffer.concat([this.getPublicKey(privateKey,true),iv,tag,encData]);
         return pack;
     }
 
@@ -238,17 +254,33 @@ export class ECIES {
     /**
      * This takes an EC public key as input, creates an EC pair to encrypt the data.
      * Returns a packed buffer of the EC public key, nonce, tag, and encrypted data. 
+     * Optional to supply Private Key 
      * @param publicKey EC Public Key
+     * @param privateKey Optional
      * @param data Data to encrypt
      * @returns Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
      */
-    encryptChaCha20(publicKey: Buffer, data: Buffer): Buffer {
+    encryptChaCha20(publicKey: Buffer, data: any): Buffer
+    encryptChaCha20(publicKey: Buffer, privateKey: Buffer, data: any): Buffer 
+    encryptChaCha20(publicKey: Buffer, arg2: any, arg3?: any): Buffer {
+
+        let privateKey: Buffer;
+        let data: Buffer;
+
+        if(arg2 && arg3) {
+            privateKey = arg2;
+            data = arg3;
+        } else {
+            privateKey = this.createKeyPair();
+            data = arg2;
+        }
 
         let nonce = Buffer.alloc(12);
         randomFillSync(nonce);
         // console.log('nonce', nonce.toString('hex'));
-        let tempKey = this.createKeyPair();
-        let key = this.getSecret(tempKey,publicKey);
+        // let tempKey: Buffer = Buffer.alloc(0);
+        
+        let key = this.getSecret(privateKey,publicKey);
         // console.log('key', key.toString('hex'));
         let cipher = createCipheriv('chacha20-poly1305', key, nonce, { authTagLength: 16 });
         let encData = cipher.update(data);
@@ -257,7 +289,7 @@ export class ECIES {
         // console.log('data enc ', encData.toString('hex'));
         // console.log('tag', tag.toString('hex'));
         // console.log('enc pub', this.getPublicKey(tempKey, true).toString('hex'));
-        let pack = Buffer.concat([this.getPublicKey(tempKey,true),nonce,tag,encData]);
+        let pack = Buffer.concat([this.getPublicKey(privateKey,true),nonce,tag,encData]);
         // console.log(pack.toString('hex'));
         // console.log(pack.toString('base64'));
         return pack;

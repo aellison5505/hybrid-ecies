@@ -4,8 +4,8 @@ import {ECIES} from './ecies';
 
 let maintest = async () => {
     let ec = createECDH('secp256k1');
-    let key = ec.generateKeys('hex','uncompressed');
-
+    //let key = ec.generateKeys('hex','uncompressed');
+    
 
     /*
     console.log(key);
