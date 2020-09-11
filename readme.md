@@ -40,7 +40,7 @@
 
 # Class: ECIES
 
-Hybrid EC encryption scheme that EC curve secp256k1, and chacha20-poly1305 or aes-256-gcm to encrypt data.
+Hybrid EC encryption scheme that takes an EC curve secp256k1, and chacha20-poly1305 or aes-256-gcm to encrypt data.
 The returned data is a packed Buffer with the public key, nonce/iv, tag, and encrypted data.
 
 ## Hierarchy
@@ -68,7 +68,7 @@ The returned data is a packed Buffer with the public key, nonce/iv, tag, and enc
 
 ###  JWKtoBuffer
 
-▸ **JWKtoBuffer**(`jwk`: [JWK](#Interface:-JWK)): *Buffer*
+▸ **JWKtoBuffer**(`jwk`: [JWK](#interfaces_ecies_jwkmd)): *Buffer*
 
 Return a Buffer from either a public or private JWK.
 
@@ -138,8 +138,9 @@ ___
 
 ▸ **encryptAES256**(`publicKey`: Buffer, `data`: Buffer): *Buffer*
 
-This takes an EC public key as input, creates an EC pair to encrypt the data.
+This takes an EC public key as input, creates an unique EC pair to encrypt the data.
 Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
+Optional to supply Private Key
 
 **Parameters:**
 
@@ -152,25 +153,50 @@ Name | Type | Description |
 
 Buffer(Bytes) - ECPubKey(33) iv(12) tag(16) encData(variable)
 
+▸ **encryptAES256**(`publicKey`: Buffer, `privateKey`: Buffer, `data`: Buffer): *Buffer*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`publicKey` | Buffer |
+`privateKey` | Buffer |
+`data` | Buffer |
+
+**Returns:** *Buffer*
+
 ___
 
 ###  encryptChaCha20
 
-▸ **encryptChaCha20**(`publicKey`: Buffer, `data`: Buffer): *Buffer*
+▸ **encryptChaCha20**(`publicKey`: Buffer, `data`: any): *Buffer*
 
 This takes an EC public key as input, creates an EC pair to encrypt the data.
 Returns a packed buffer of the EC public key, nonce, tag, and encrypted data.
+Optional to supply Private Key
 
 **Parameters:**
 
 Name | Type | Description |
 ------ | ------ | ------ |
 `publicKey` | Buffer | EC Public Key |
-`data` | Buffer | Data to encrypt |
+`data` | any | Data to encrypt |
 
 **Returns:** *Buffer*
 
 Buffer(Bytes) - ECPubKey(33) nonce(12) tag(16) encData(variable)
+
+▸ **encryptChaCha20**(`publicKey`: Buffer, `privateKey`: Buffer, `data`: any): *Buffer*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`publicKey` | Buffer |
+`privateKey` | Buffer |
+`data` | any |
+
+**Returns:** *Buffer*
 
 ___
 
